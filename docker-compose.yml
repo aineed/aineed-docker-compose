@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   aineed-db:
@@ -9,16 +9,26 @@ services:
       POSTGRES_DB: aineed  # Change this to the desired database name
       POSTGRES_USER: aineed    # Change this to the desired database username
       POSTGRES_PASSWORD: password  # Change this to the desired database password
+    networks:
+      - backend
     ports:
       - "5432:5432"  # Map host port 5432 to container port 5432 (default PostgreSQL port)
     volumes:
-      - pgdata:/var/lib/postgresql/data  # Persist data outside the container
+      - aineed:/var/lib/postgresql/data  # Persist data outside the container
 
   aineed-api:
     image: aineed/test-kotlin-maven-quarkus:latest  # Replace with the actual Quarkus image from Docker Hub
     container_name: aineed_api
     restart: unless-stopped
+    networks:
+      - backend
     ports:
       - "8080:8080"  # Map the container's port to the host's port
+    depends_on:
+      - aineed-db
+
 volumes:
-  pgdata:  # Define a named volume to persist the PostgreSQL data
+  aineed:  # Define a named volume to persist the PostgreSQL data
+
+networks:
+  backend: 
