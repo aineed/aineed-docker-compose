@@ -20,6 +20,8 @@ services:
     image: aineed/test-kotlin-maven-quarkus:latest  # Replace with the actual Quarkus image from Docker Hub
     container_name: aineed_api
     restart: unless-stopped
+    environment:
+      - "quarkus.profile=dev"
     networks:
       - backend
     ports:
