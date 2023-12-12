@@ -1,8 +1,8 @@
-version: '3'
+version: '3.9'
 
 services:
   aineed-db:
-    image: postgres:latest
+    image: postgres:15
     container_name: aineed_postgres_db
     restart: unless-stopped
     environment:
